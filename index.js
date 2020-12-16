@@ -1,12 +1,14 @@
 const express = require("express");
-// const cookieParser = require("cookie-parser")
-// const cSurf = require("csurf")
-
-// const cSurfProtection = cSurf({cookie: true})
-
-
+const cookieParser = require("cookie-parser")
+const cSurf = require("csurf")
 const app = express();
 const port = process.env.PORT || 3000;
+
+const cSurfProtection = cSurf({ cookie: true })
+
+app.use(cookieParser())
+
+
 
 app.set("view engine", "pug");
 
@@ -24,9 +26,10 @@ app.get("/", (req, res) => {
   res.render('index', { users })
 });
 
-// app.get("/create", cSurfProtection, async(req, res) => {
+app.get("/create", cSurfProtection, async (req, res) => {
 
-// })
+  res.render('forms')
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
